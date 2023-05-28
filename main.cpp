@@ -31,11 +31,29 @@ public:
 
 	Human(char* FIO, size_t size)
 	{
+		
+		if (_FIO != nullptr)
+			delete[] _FIO;
 		_FIO = new char[size] {};
 		for (size_t i = 0; i < size; ++i) {
 			_FIO[i] = FIO[i];
 		}
 		_size = size;
+		//std::cout << "Конструктор копирования Human\n" << "Адрес -> " << this << std::endl << _FIO 
+			//<< ". Адрес -> " << &_FIO << std::endl;
+	}
+
+	Human(Human& human)
+	{
+		if (_FIO != nullptr)
+			delete[] _FIO;
+		_FIO = new char[human._size] {};
+		for (size_t i = 0; i < human._size; ++i) {
+			_FIO[i] = human._FIO[i];
+		}
+		_size = human._size;
+		//std::cout << "Конструктор копирования Human\n" << "Адрес -> " << this << std::endl << _FIO
+			//<< ". Адрес -> " << &_FIO << std::endl;
 	}
 	
 	Human& operator=(Human const & human) {
@@ -48,19 +66,19 @@ public:
 				_FIO[i] = human._FIO[i];
 			}
 		}
+		//std::cout << "Оператор присваивания Human:\nАдрес -> " << this << std::endl << _FIO
+			//<< ". Адрес -> " << &_FIO << std::endl;
 		return *this;
 	}
 
 	~Human() {
+		//std::cout << "Деструктор Human\nАдрес -> " << this << _FIO << ". Адрес -> " << &_FIO << std::endl;
 		if(_FIO != nullptr)
 			delete[] _FIO;
 	}
 	void PrintHuman() {
 		std::cout << _FIO << std::endl;
 	}
-
-	
-
 };
 
 
@@ -70,19 +88,20 @@ private:
 	unsigned int _numApartment;
 
 public:
-	Apartment() {}
+	Apartment() : _numApartment(0)
+	{}
 
 	Apartment(Human& human, unsigned int numApartment)
 	{
-		Human* h = new Human(human);
-		_apartment.push_back(h);
+		Human* tmp = new Human(human);
+		_apartment.push_back(tmp);
 		_numApartment = numApartment;
 	}
 
 	~Apartment() {
-		for (auto it = _apartment.begin(); it != _apartment.end(); ++it) {
+		for (std::vector<Human*>::iterator it = _apartment.begin(); it != _apartment.end(); ++it) {
 			if (*it != nullptr)
-				delete* it;
+				delete *it;
 		}
 	}
 
@@ -111,6 +130,7 @@ public:
 		std::cout << "---------------------------------------------\n";
 		for (const auto& h : _apartment) {
 			h->PrintHuman();
+			std::cout << "Квартира -> " << _numApartment << std::endl;
 		}
 	}
 
@@ -139,10 +159,8 @@ public:
 	}
 
 	void AddApartment(Human& human, unsigned int numApartment) {
-		Apartment* _ap = new Apartment;
-		Apartment tmp(human, numApartment);
-		_ap = &tmp;
-		_bilding.push_back(_ap);
+		Apartment* tmp = new Apartment(human, numApartment);
+		_bilding.push_back(tmp);
 	}
 
 	void PrintApartmentBulding() {
@@ -155,8 +173,8 @@ public:
 		for (auto it = _bilding.begin(); it != _bilding.end(); ++it) {
 			if ((*it)->GetNumApartment() == numApartment) {
 				(*it)->AddHuman(human, numApartment);
+				return;
 			}
-			return;
 		}
 
 		AddApartment(human, numApartment);
@@ -169,10 +187,10 @@ public:
 int main() {
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251); // установка кодовой страницы на ввод текста
-	Human h1;
 	ApartmentBuilding ab1;
 	bool is_first = true;
-	for (int i = 0; i < 2; ++i) {
+	char choice = 'e';
+	do{
 		std::cout << "Введите ФИО -> ";
 		std::string fio;
 		if(!is_first)
@@ -187,14 +205,16 @@ int main() {
 			c_fio[i] = fio[i];
 		}
 		Human tmp_h(c_fio, fio.size() + 1);
-		h1 = tmp_h;
 		delete[] c_fio;
 
-		ab1.CheckNumOfApartment(h1, numApartment);
-				
-	}
+		ab1.CheckNumOfApartment(tmp_h, numApartment);
+		std::cout << "Хотите продолжить (y/n)? ";
+		std::cin >> choice;
+	}while (choice == 'y');
 	
 	ab1.PrintApartmentBulding();
+
+	
 	
 	return 0;
 }
