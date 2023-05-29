@@ -1,6 +1,11 @@
-#pragma once
-#include <vector>
+#ifndef _APARTMENT_H_
+#define _APARTMENT_H_
+
 #include "human.hpp"
+
+
+#include <vector>
+
 
 class Apartment {
 private:
@@ -28,3 +33,5 @@ public:
 
 
 };
+
+#endif

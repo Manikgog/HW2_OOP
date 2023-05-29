@@ -1,7 +1,13 @@
-#pragma once
-#include <vector>
+#ifndef _BUILDING_H_
+#define _BUILDING_H_
+
 #include "apartment.hpp"
 #include "human.hpp"
+
+
+
+#include <vector>
+
 
 class ApartmentBuilding {
 private:
@@ -21,3 +27,5 @@ public:
 	void CheckNumOfApartment(Human& human, unsigned int numApartment);
 
 };
+
+#endif
