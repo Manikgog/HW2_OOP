@@ -3,9 +3,6 @@
 
 #include "apartment.hpp"
 #include "human.hpp"
-
-
-
 #include <vector>
 
 

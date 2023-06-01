@@ -2,8 +2,6 @@
 #define _APARTMENT_H_
 
 #include "human.hpp"
-
-
 #include <vector>
 
 
