@@ -2,29 +2,25 @@
 #define _HUMAN_H_
 #include <iostream>
 
-class Human {
+#include "Component.hpp"
+
+class Human : public Component {
 private:
-	char* _FIO;
-	size_t _size;
-
-
+	
 public:
-	Human() : _FIO(nullptr), _size(0)
-	{}
 
-	Human(char* FIO, size_t size);
+	Human(std::string name);
 
-	Human(Human& human);
+	void Add(Component* component) override {
 
-	Human& operator=(Human const& human);
-
-	~Human() {
-		//std::cout << "Деструктор Human\nАдрес -> " << this << _FIO << ". Адрес -> " << &_FIO << std::endl;
-		if (_FIO != nullptr)
-			delete[] _FIO;
 	}
-	void PrintHuman() {
-		std::cout << _FIO << std::endl;
+
+	void Remove(Component* component) override {
+
+	}
+
+	void Print() {
+		std::cout << name_ << std::endl;
 	}
 };
 #endif

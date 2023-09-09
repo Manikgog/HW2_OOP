@@ -21,38 +21,32 @@
 #include "human.hpp"
 #include "apartment.hpp"
 #include "building.hpp"
+#include "Component.hpp"
 
 
 
 int main() {
-	setlocale(LC_ALL, "Russian");
-	SetConsoleCP(1251); // установка кодовой страницы на ввод текста
-	ApartmentBuilding ab1;
-	bool is_first = true;
-	char choice = 'e';
-	do{
-		std::cout << "Введите ФИО -> ";
-		std::string fio;
-		if(!is_first)
-			std::cin.ignore();
-		is_first = false;
-		std::getline(std::cin, fio);
-		std::cout << "Введите номер квартиры -> ";
-		unsigned int numApartment;
-		std::cin >> numApartment;
-		char* c_fio = new char[fio.size() + 1] {};
-		for (size_t i = 0; i < fio.size(); i++) {
-			c_fio[i] = fio[i];
-		}
-		Human tmp_h(c_fio, fio.size() + 1);
-		delete[] c_fio;
 
-		ab1.CheckNumOfApartment(tmp_h, numApartment);
-		std::cout << "Хотите продолжить (y/n)? ";
-		std::cin >> choice;
-	}while (choice == 'y');
+	Component* MonicaBing = new Human("Monica Bing");
+	Component* ChendlerBing = new Human("Monica Bing");
+	Component* JoeTribiany = new Human("Joe Tribiany");
+	Component* RachelGreen = new Human("Rachel Green");
+
+	Component* apartment_1 = new Apartment("1");
+	Component* apartment_2 = new Apartment("2");
 	
-	ab1.PrintApartmentBulding();
+	apartment_1->Add(MonicaBing);
+	apartment_1->Add(ChendlerBing);
+	apartment_2->Add(JoeTribiany);
+	apartment_2->Add(RachelGreen);
+
+	Component* building = new Building("Engelsa 38");
+	
+	building->Add(apartment_1);
+	building->Add(apartment_2);
+	
+	
+	building->Print();
 
 	
 	

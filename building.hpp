@@ -6,23 +6,28 @@
 #include <vector>
 
 
-class ApartmentBuilding {
+class Building : public Component
+{
 private:
-	std::vector<Apartment*> _bilding;
-
+	std::vector<Component*> apartments_;
 
 public:
+	Building(std::string name) : Component(name) {}
+	void Add(Component* component) {
+		apartments_.push_back(component);
+	}
 
-	~ApartmentBuilding();
+	void Remove(Component* component) {
+		apartments_.erase(remove(apartments_.begin(), apartments_.end(), component), apartments_.end());
+	}
 
-	void AddApartment(const Apartment& ap);
-
-	void AddApartment(Human& human, unsigned int numApartment);
-
-	void PrintApartmentBulding();
-
-	void CheckNumOfApartment(Human& human, unsigned int numApartment);
-
+	void Print() {
+		std::cout << "Building address - " << name_ << std::endl;
+		for (const auto apartment : apartments_) {
+			apartment->Print();
+		}
+	}
 };
+
 
 #endif
