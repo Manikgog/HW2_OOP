@@ -48,6 +48,23 @@ int main() {
 	
 	building->Print();
 
+	apartment_1->Remove(MonicaBing);
+	apartment_1->Remove(ChendlerBing);
+
+	building->Remove(apartment_1);
+
+	building->Remove(apartment_2);
+
+	delete MonicaBing;
+	delete ChendlerBing;
+	delete JoeTribiany;
+	delete RachelGreen;
+
+	delete apartment_1;
+	delete apartment_2;
+	delete building;
+
+
 	
 	
 	return 0;
